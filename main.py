@@ -1,15 +1,22 @@
 import openai
 import streamlit as st
 
-# API 키 설정
 openai.api_key = "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"
-# 제목과 설명을 위한 UI 구성
+
+# Streamlit 앱 제목
 st.title("AI Poet")
-st.write("Enter a keyword, and the AI will generate a poem based on it!")
 
-# 키워드를 입력받기 위한 텍스트 박스
-keyword = st.text_input("Enter a keyword:")
+# 사용자가 입력할 키워드 입력창
+keyword = st.text_input("Enter a keyword")
 
-# 시 작성 버튼 클릭 시 처리
-if st.button("Generate Poem"):
-    if keywor
+if keyword:  # 조건문 뒤에 콜론 추가
+    # OpenAI API를 호출하여 시를 생성하는 코드
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Write a poem about {keyword}.",
+        max_tokens=150
+    )
+    poem = response.choices[0].text.strip()
+    
+    # 생성된 시 출력
+    st.write(poem)
